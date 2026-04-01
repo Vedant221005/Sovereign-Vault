@@ -1,4 +1,9 @@
 # Secure File Storage with IAM - Full Project Guide
+<img width="954" height="507" alt="1" src="https://github.com/user-attachments/assets/2665bde5-6bca-491b-8e8b-4772b4546e09" />
+<img width="960" height="509" alt="2" src="https://github.com/user-attachments/assets/a0e1a79c-9171-4b59-a512-2b1be9edcb47" />
+<img width="960" height="509" alt="3" src="https://github.com/user-attachments/assets/70c6ea01-f351-4230-9de7-0e4b9cd9215e" />
+<img width="960" height="510" alt="4" src="https://github.com/user-attachments/assets/c7439b70-b794-4da2-aeac-2c01d305dbb3" />
+
 
 ## 1. Project Summary
 
