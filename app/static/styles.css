@@ -1,0 +1,64 @@
+:root {
+  --ok: #40efb7;
+  --warn: #ffb4ab;
+  --line: #2f2f2f;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.security-scanline {
+  background: linear-gradient(to bottom, transparent 50%, rgba(172, 203, 224, 0.04) 50%);
+  background-size: 100% 4px;
+}
+
+.status-ok {
+  color: var(--ok);
+}
+
+.status-warn {
+  color: var(--warn);
+}
+
+.toast-wrap {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 8px;
+  z-index: 9999;
+}
+
+.toast {
+  min-width: 230px;
+  max-width: 360px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #171717;
+  color: #e5e2e1;
+  box-shadow: var(--shadow);
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: toast-in 180ms ease forwards;
+}
+
+.toast.success { border-left: 4px solid var(--ok); }
+.toast.error { border-left: 4px solid var(--warn); }
+
+@keyframes toast-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.action-btn {
+  margin-right: 4px;
+  margin-bottom: 2px;
+  font-size: 12px;
+  padding: 6px 10px;
+  border: 1px solid #2f2f2f;
+  background: #1f1f1f;
+  color: #e5e2e1;
+  cursor: pointer;
+}

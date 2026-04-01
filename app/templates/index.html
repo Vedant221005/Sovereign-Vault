@@ -1,0 +1,187 @@
+<!doctype html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sovereign Vault</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            headline: ["Space Grotesk", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          colors: {
+            bg0: "#0e0e0e",
+            bg1: "#151515",
+            bg2: "#1f1f1f",
+            line: "#2f2f2f",
+            primary: "#accbe0",
+            secondary: "#40efb7",
+            danger: "#ffb4ab",
+            ink: "#e5e2e1",
+            mute: "#9ca3af"
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', v='20260401a') }}">
+</head>
+<body class="bg-bg0 text-ink font-body min-h-screen">
+  <main id="auth-view" class="min-h-screen flex items-center justify-center p-6 security-scanline">
+    <section class="w-full max-w-xl border border-line bg-black/40 backdrop-blur-xl p-10">
+      <div class="mb-10 text-center">
+        <h1 class="font-headline text-4xl font-bold uppercase tracking-wider text-primary">Sovereign Vault</h1>
+        <p class="mt-2 font-mono text-xs text-mute tracking-wide">AUTHENTICATION_PROTOCOL::LEVEL_5</p>
+      </div>
+      <form id="login-form" class="space-y-6">
+        <div>
+          <label class="block text-xs uppercase tracking-[0.2em] text-primary mb-2 font-mono">Username</label>
+          <input id="login-username" class="w-full bg-bg1 border border-line text-ink px-4 py-3 focus:border-primary focus:ring-0" type="text" placeholder="USERNAME" required>
+        </div>
+        <div>
+          <label class="block text-xs uppercase tracking-[0.2em] text-primary mb-2 font-mono">Password</label>
+          <input id="login-password" class="w-full bg-bg1 border border-line text-ink px-4 py-3 focus:border-primary focus:ring-0" type="password" placeholder="••••••••••••" required>
+        </div>
+        <button class="w-full bg-primary text-black font-headline font-bold uppercase tracking-[0.2em] py-3 hover:brightness-110" type="submit">Login</button>
+      </form>
+
+      <div class="mt-6 border-t border-line pt-4">
+        <p class="text-xs text-mute mb-3">No account yet?</p>
+        <button id="show-register-btn" class="w-full border border-line text-ink py-2 text-xs uppercase tracking-widest hover:border-primary" type="button">Create Account</button>
+      </div>
+
+      <form id="register-form" class="space-y-4 mt-4" hidden>
+        <div>
+          <label class="block text-xs uppercase tracking-[0.2em] text-primary mb-2 font-mono">New Username</label>
+          <input id="register-username" class="w-full bg-bg1 border border-line text-ink px-4 py-3 focus:border-primary focus:ring-0" type="text" placeholder="new_user" required>
+        </div>
+        <div>
+          <label class="block text-xs uppercase tracking-[0.2em] text-primary mb-2 font-mono">New Password</label>
+          <input id="register-password" class="w-full bg-bg1 border border-line text-ink px-4 py-3 focus:border-primary focus:ring-0" type="password" placeholder="Password123" required>
+        </div>
+        <button class="w-full bg-secondary text-black font-headline font-bold uppercase tracking-[0.15em] py-3 hover:brightness-110" type="submit">Create Account</button>
+      </form>
+    </section>
+  </main>
+
+  <main id="app-shell" hidden>
+    <header class="h-16 border-b border-line bg-black/40 backdrop-blur-xl px-6 flex items-center justify-between fixed left-0 right-0 top-0 z-50">
+      <div>
+        <p class="font-headline text-xl uppercase tracking-widest text-primary">Sovereign Vault</p>
+      </div>
+      <div class="flex items-center gap-4 text-sm">
+        <span>Logged in as <b id="session-user">none</b></span>
+        <span class="font-mono text-xs text-secondary uppercase" id="session-role">none</span>
+        <button id="top-admin-users-btn" class="px-4 py-2 border border-line text-ink hover:border-primary hidden">Users</button>
+        <button id="top-admin-files-btn" class="px-4 py-2 border border-line text-ink hover:border-primary hidden">Files</button>
+        <button id="logout-btn" class="px-4 py-2 border border-line text-ink hover:border-primary">Logout</button>
+      </div>
+    </header>
+
+    <section id="user-dashboard" class="pt-24 px-6 pb-10" hidden>
+      <div class="max-w-6xl mx-auto grid lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-4 space-y-6">
+          <div class="bg-bg1 border border-line p-6">
+            <h2 class="font-headline text-xl mb-4">Secure Upload</h2>
+            <form id="upload-form" class="space-y-4">
+              <input id="upload-file" class="w-full bg-bg2 border border-line" type="file" required>
+              <button class="w-full bg-secondary text-black font-bold py-2 uppercase tracking-widest text-xs" type="submit">Upload + Encrypt</button>
+            </form>
+          </div>
+          <!-- <div class="bg-bg1 border border-line p-6">
+            <p class="text-xs uppercase tracking-widest text-mute">Role View</p>
+            <h3 class="font-headline text-2xl mt-2">User Dashboard</h3>
+            <p class="text-sm text-mute mt-2">You can manage your own files only.</p>
+          </div> -->
+        </div>
+        <div class="lg:col-span-8 bg-bg1 border border-line p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="font-headline text-2xl">My Secure Repository</h2>
+            <button id="refresh-files" class="px-3 py-2 border border-line text-xs uppercase tracking-widest">Refresh Files</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="text-xs uppercase tracking-widest text-mute border-b border-line">
+                <tr>
+                  <th class="text-left py-3">Filename</th>
+                  <th class="text-left py-3">Owner</th>
+                  <th class="text-left py-3">Created</th>
+                  <th class="text-left py-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="files-body" class="divide-y divide-line"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="admin-dashboard" class="pt-24 px-6 pb-10" hidden>
+      <div class="max-w-7xl mx-auto space-y-8">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-bg1 border border-line p-5"><p class="text-xs uppercase text-mute tracking-widest">Encrypted Files</p><p id="stat-files" class="font-headline text-4xl mt-2">0</p></div>
+          <div class="bg-bg1 border border-line p-5"><p class="text-xs uppercase text-mute tracking-widest">Users</p><p id="stat-users" class="font-headline text-4xl mt-2">0</p></div>
+          <div class="bg-bg1 border border-line p-5"><p class="text-xs uppercase text-mute tracking-widest">Role</p><p class="font-headline text-4xl mt-2 text-secondary">ADMIN</p></div>
+        </div>
+
+        <div id="admin-users-section" class="grid lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-12 bg-bg1 border border-line p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-headline text-2xl">User Directory</h2>
+              <button id="refresh-users" class="px-3 py-2 border border-line text-xs uppercase tracking-widest">Refresh Users</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="text-xs uppercase tracking-widest text-mute border-b border-line">
+                  <tr>
+                    <th class="text-left py-3">Username</th>
+                    <th class="text-left py-3">Role</th>
+                    <th class="text-left py-3">Failed</th>
+                    <th class="text-left py-3">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="users-body" class="divide-y divide-line"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="admin-files-section" class="grid lg:grid-cols-12 gap-8" hidden>
+          <div class="lg:col-span-12 bg-bg1 border border-line p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-headline text-2xl">All Uploaded Files</h2>
+              <button id="refresh-files-admin" class="px-3 py-2 border border-line text-xs uppercase tracking-widest">Refresh Files</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="text-xs uppercase tracking-widest text-mute border-b border-line">
+                  <tr>
+                    <th class="text-left py-3">User Name</th>
+                    <th class="text-left py-3">File Name</th>
+                    <th class="text-left py-3">Encrypted String</th>
+                    <th class="text-left py-3">Last Downloaded</th>
+                    <th class="text-left py-3">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-files-body" class="divide-y divide-line"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="fixed left-4 bottom-4 bg-bg1 border border-line px-4 py-2 text-xs font-mono text-mute z-50">STATUS: <span id="status-text">Ready</span></div>
+  <script src="{{ url_for('static', filename='app.js', v='20260401a') }}"></script>
+</body>
+</html>
